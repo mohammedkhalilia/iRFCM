@@ -1,4 +1,4 @@
-function [Dh, c] = make_euclidean(D, delta, c, transform_func)
+function [Dh, c] = euclideanize(D, delta, c, transform_func)
 %**************************************************************************
 % Usage Dh = make_euclidean(D, c, delta, transfrom_func)
 %

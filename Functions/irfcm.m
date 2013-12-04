@@ -112,7 +112,7 @@ function output=irfcm(R, c, options)
     %If transform option is provided, but delta is not, then do the
     %transformation based on default option, delta = 11' - I
     if isfield(options,'Delta')
-        [D, b] = make_euclidean(R, delta, ac, 'Dh = (D + c*delta);');
+        [D, b] = euclideanize(R, delta, ac, 'Dh = (D + c*delta);');
         eps1 = stress(R, D, 'eps1');
         s1 = stress(R, D, 'stress1');
         euc = struct('KruskalStress',s1,'eps',eps1,'c',b,'D',D,'Delta',delta);
