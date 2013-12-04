@@ -109,12 +109,9 @@ function output=irfcm(R, c, options)
     D = R;n=size(D,1);d = zeros(c,n);
     num_it=0;step_size=epsilon;U=Inf(c,n);
     
-    %check if D is Euclidean
-    euc = is_euclidean(D);
-    
     %If transform option is provided, but delta is not, then do the
     %transformation based on default option, delta = 11' - I
-    if ~euc
+    if isfield(options,'Delta')
         [D, b] = make_euclidean(R, delta, ac, 'Dh = (D + c*delta);');
         eps1 = stress(R, D, 'eps1');
         s1 = stress(R, D, 'stress1');
@@ -139,6 +136,12 @@ function output=irfcm(R, c, options)
         % First, get new initial values for d:
         for i=1:c
             d(i,:)=D*V(i,:)'-V(i,:)*D*V(i,:)'/2;
+        end
+       
+        j = find(d(:) < 0);
+        if ~isempty(j)
+           output.Error = sprintf('RFCM encountered %d negative relational distances in iteration %d. RFCM terminated execuation.\nPlease re-run iRFCM and provide Delta to Euclideanize D before clustering\n\n', length(j), num_it); 
+           return;
         end
         
         %Get new partition matrix U:

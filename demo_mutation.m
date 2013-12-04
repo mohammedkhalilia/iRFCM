@@ -34,9 +34,6 @@ for i=1:length(deltas)
     eval(deltas{i});
     options.Delta = delta;
     out = irfcm(D.^2,c,options);
-    s = out.Euc.KruskalStress;
-    ac = out.Euc.c;
-    eps1 = out.Euc.eps;
         
     U = out.U;
     dlmwrite(sprintf('Results/Mutation/Partitions/U-%s(%d).csv',delta_names{i},c),U, 'delimiter',',');
