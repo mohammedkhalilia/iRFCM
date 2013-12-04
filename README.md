@@ -4,7 +4,7 @@ iRFCM is an extension to the Relational Fuzzy c-Means algorithm first proposed b
 
 To overcome this problem, iRFCM will Euclideanize D is it not already Euclidean using various types of transformations that are discussed in [2-3]
 
-NOTE: part of iRFCM, which the Subdominant Ultrametric transformation, relies on two built MATLAB built-in fucntions which are part of the Bioinformatics toolbox. The first function is graphminspantree() which is to construct the minimum spanning tree (MST) from D. The second function is graphshortestpath(), which is used to traverse the path between two nodes in MST. 
+NOTE: part of iRFCM, which the Subdominant Ultrametric transformation, relies on two MATLAB built-in fucntions which are part of the Bioinformatics toolbox. The first function is graphminspantree() which is to construct the minimum spanning tree (MST) from D. The second function is graphshortestpath(), which is used to traverse the path between two nodes in MST. 
 
 [1] R. J. Hathaway, J. W. Davenport, and J. C. Bezdek, “Relational duals of the c-means clustering algorithms,” Pattern Recognition, vol. 22, no. 2, pp. 205–212, Jan. 1989.
 
