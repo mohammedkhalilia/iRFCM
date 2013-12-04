@@ -1,35 +1,38 @@
 function [Dh, c] = euclideanize(D, delta, c, transform_func)
-%**************************************************************************
-% Usage Dh = make_euclidean(D, c, delta, transfrom_func)
+%%
 %
-% Transforms a dissimilarity matrix D to an Euclidean matrix Dh. 
-% This will center the matrix D according to
-%    B = (I - 11') * (-0.5*D) * (I - 11')
-% OR if D is the squared distances, then
-%    B = (I - 11') * (-0.5*D^2) * (I - 11')
-% Then check if the matrix positive semi deifnite and return the
-% smallest eigenvalue as the constant c (see [1-2])
+%   Transforms a dissimilarity matrix D to an Euclidean matrix Dh. 
+%   Simplest way to do that is by using the Beta-Spread transformation.
+%   Which first involves centering the matrix D according to
+%   
+%       B = (I - 11') * (-0.5*D) * (I - 11')
+%
+%   But if we unsquared distances, then B is
+%
+%       B = (I - 11') * (-0.5*D.^2) * (I - 11')
+%
+%   Then check if the matrix positive semi deifnite and return the
+%   smallest eigenvalue as the constant c (see [1-2])
+%   NOTE: D here is expected to contain squared dissimialrities.
+%
+% Usage [Dh,c] = make_euclidean(D, c, delta, transfrom_func)
 %
 % Dh                - the Euclidean realization of D
 % c                 - the constant used to tranform D to Dh
 % D                 - dissimilarity matrix
-% c                 - Optional Additive Constant provided, if not provided it will
-%                     computed
-% transform_func:   - this is a function of squared D, c and delta and return an
-%                     Euclidean dissimilarity matrix. By default this function is:
+% c                 - Optional Additive Constant provided, if not provided
+%                       it will be computed
+% transform_func:   - this is a function that is used to tranform D to Dh. 
+%                     By default this function is:
 %
-%                       Dh = (D + c*delta).^0.5;
+%                       Dh = D + c*delta;
 %                       
-%                     However, in some cases as in the NERFCM 1994 paper the
-%                     tranformation function is slightly different, which is:
-%                     Dh = (D + c*delta);
+%                     However, in some cases as some might want the square root of Dh:
+%                     Dh = (D + c*delta).^0.5;
 %
-%                     The only difference is the square root. Because
-%                     NERFCM expects the squared distances rather than the
-%                     distances themselves.
+%                     Remember that RFCM requires squared dissimilarities
+%                     and therefore Dh = Dh = D + c*delta;
 %
-%                     So, you can provider you own function, but make sure the return
-%                     variable name is ALWAYS Dh
 % delta             - delta is the matrix that is used to tranform R to Euclidean.
 %                     delta is of size n x n and can be for instance
 %                   
@@ -40,19 +43,19 @@ function [Dh, c] = euclideanize(D, delta, c, transform_func)
 %                       delta = parametric function
 %                       
 %                     delta is expected to have an Euclidean representation,
-%                     otherwise an error will be thrown (see [3])
+%                     otherwise an error will be thrown (see [3-4])
 %                  
 % Refs:
 %   [1] T. Cox and M. Cox, Multidimensional scaling. 2010.
 %   [2] K. Mardia and J. Kent, “y BIBBY, JM (1979): Multivariate analysis,” Academic Press, London.
 %   [3] J. Benasseni, M. B. Dosse, and S. Joly, “On a General Transformation Making a Dissimilarity 
 %       Matrix Euclidean,” Journal of Classification, vol. 24, no. 1, pp. 33–51, Jun. 2007.
-%**************************************************************************
+%   [4] J. Dattorro, Convex optimization and Euclidean distance geometry. 2005.
     
     %if c is not provided, then first check if the matrix is Euclidean 
     %and compute c
     if nargin < 3 || c == 0 
-        %if delta is not provided
+        %if delta is not provided, then use the default, Beta-Spread
         if nargin < 2 || isempty(delta)
             [euc, c] = find_constant_c(D);
         else
@@ -73,6 +76,6 @@ function [Dh, c] = euclideanize(D, delta, c, transform_func)
     if nargin == 4 && ~strcmp(transform_func,'')
         eval(transform_func);
     else
-        Dh = (D + c.*delta).^0.5;
+        Dh = D + c.*delta;
     end
 end

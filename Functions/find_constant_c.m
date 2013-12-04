@@ -1,22 +1,26 @@
 function varargout = find_constant_c(D, delta)
 %%
-% Usage c = find_constant_c(D, delta)
+%   Computes the additive constant c if the provided matrix D is not
+%   Euclidean. The simplest approach is using Beta-Spread, where c is 
+%   computed using the doubly centered matrix. 
+%   Using Beta-Spread we center the matrix D according to
 %
-% Computes the additive constant c if the provided matrix D is not
-% Euclidean. The simple approach is when delta is not provided, where c is 
-% computed using the doubly centered matrix. Also, make sure that the D is
-% squared. If you suspect that D is not squared then the input should be
-% squared using D.^2.
-% When delta is provided computed in terms of D and delta.
-% This will center the matrix D according to
 %           B = (I - 11') * (-0.5*D) * (I - 11')
 %               OR if D is the squared distances, then
-%           B = (I - 11') * (-0.5*D^2) * (I - 11')
+%           B = (I - 11') * (-0.5*D.^2) * (I - 11')
 %           
-%           Then check if the matrix positive semi deifnite and return the
-%           smallest eigenvalue as the constant c (see [1-2])
+%           Then check if the matrix positive semi deifnite (psd). If D is not psd
+%           Then c = -2 * lambda (lambda smallest eigenvalue of B) (see [1-2])
 %
-% c     - the smallest constant to make D Euclidean
+%   If delta is provided a different computation is used to find c, which
+%   documented in ref. [3]
+%
+%   Usage c = find_constant_c(D, delta)
+%
+% varargout:
+% varargout{1} - 0 (D is not Euclidean) or 1 (D is Euclidean)
+% varargout{2} - additive constant
+%
 % D     - n x n dissimilarity matrix
 % delta - delta is the matrix that is used to tranform R to Euclidean.
 %         delta is of size n x n and can be for instance
@@ -26,7 +30,7 @@ function varargout = find_constant_c(D, delta)
 %           delta = power of R
 %           delta = parametric function
 %           delta is expected to have an Euclidean representation,
-%           otherwise an error will be thrown (see [4])
+%           otherwise an error will be thrown (see [3])
 %
 % Refs:
 %   [1] T. Cox and M. Cox, Multidimensional scaling. 2010.
@@ -35,16 +39,16 @@ function varargout = find_constant_c(D, delta)
 %       Matrix Euclidean,” Journal of Classification, vol. 24, no. 1, pp. 33–51, Jun. 2007.
     
     %Get c based on the positive semi definite test without delta
-    %See [1-2]
+    %See [1-2]. In other words, use Beta-Spread
     if nargin == 1
-        [euc, c, B, evalues] = is_euclidean(D);
+        [euc, c, B, ev] = is_euclidean(D);
         varargout{1} = euc;
         varargout{2} = -2*c;
         varargout{3} = B;
-        varargout{4} = evalues;
+        varargout{4} = ev;
         
     %Get c based on the positive semi definite test with a provided delta
-    %See [4]
+    %See [3]
     elseif nargin == 2
         %check if delta is Euclidean, otherwise error 
         if size(D) ~= size(delta)
