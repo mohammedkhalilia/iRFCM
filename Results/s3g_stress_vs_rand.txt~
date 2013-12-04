@@ -1,0 +1,14 @@
+img 1
+Beta-Spread
+delta = D.^0.5;
+delta = D.^0.4;
+delta = D.^0.3;
+delta = subdominant_ultrametric(D);delta = (delta + delta');
+delta = D.^0.2;
+delta = ivat(D);
+delta = D.^0.1;
+delta = D.^0.05;
+delta = 1-exp(-5.*D);
+delta = 1-exp(-7.*D);
+delta = 1-exp(-20.*D);
+delta=[];
