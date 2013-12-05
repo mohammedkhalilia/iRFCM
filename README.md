@@ -33,12 +33,25 @@ Despite those work arounds, the iRFCM toolbox performs as expected and the resul
 
 iRFCM Configurations
 ------------------------------------------
-iRFCM allows the user to define their own configurations using MATLAB struct. Those configurations are explained in the `Functions/irfcm.m` function, but we will explain here as well.
+iRFCM allows the user to define their own configurations using MATLAB struct. Those configurations are explained in the `Functions/irfcm.m` function, but we will explain here as well. 
+Example 4 breifly demonstrates how to define options for iRFCM. The iRFCM options are defined in a structure with the following fields/members:
 
-Example (Mutation Dataset)
+`fuzzifier` - 
+
+`epsilon` -
+
+`maxIter` - 
+
+`initType` - 
+
+`gamma` - 
+
+`delta` - 
+
+Examples (Mutation Dataset)
 -----------------------------------------
 
-### iRFCM with Beta-Spread
+### Example 1. iRFCM with Beta-Spread
 
     %load the mutation dataset (for details on the Mutation dataset see ref. [4])
     %NOTE: the dissimilarities here are not squared
@@ -57,7 +70,7 @@ Example (Mutation Dataset)
 	%notice that the first input is the Hadamard product of D. Because pdist dissimilarities are not squared.
 	out = irfcm(D.^2,c,options);
 
-### iRFCM with Subdominant Ultrametric
+### Example 2. iRFCM with Subdominant Ultrametric
 
 	%load the mutation dataset (for details on the Mutation dataset see ref. [4])
     %NOTE: the dissimilarities here are not squared
@@ -76,7 +89,7 @@ Example (Mutation Dataset)
 	%notice that the first input is the Hadamard product of D. Because pdist dissimilarities are not squared.
 	out = irfcm(D.^2,c,options);
 
-### iRFCM without Euclideanizing D
+### Example 3. iRFCM without Euclideanizing D
 The small code snippet below will run the Mutation dataset without the need for Euclideanizing D first. That is OK because we already know in advance that RFCM does not fail to execute on the Mutation dataset.
 
 	D = load('Data/animal_mutation.csv');
@@ -84,7 +97,7 @@ The small code snippet below will run the Mutation dataset without the need for 
 	c = 4;
 	out = irfcm(D.^2,c);
 
-### iRFCM with User Defined Configurations
+### Example 4. iRFCM with User Defined Configurations
 iRFCM in the examples above runs with the default configurations. Those configurations can also be defined by the user
 
 	D = load('Data/animal_mutation.csv');
