@@ -44,7 +44,7 @@ Example 4 breifly demonstrates how to define options for iRFCM. The iRFCM option
 
 `initType` - (default 2) iRFCM starts by initializing the relational cluster centers V. There are two ways that iRFCM can initialize V. If initType = 2 then c rows are randomly selected from D to initialize the c relational cluster centers. If initType = 1, then it is random initialization.
 
-`delta` - 
+`delta` - this is an n x n matrix that is used to Euclideanize D. If delta is not provided, iRFCM will attempt to perform clustering using D. If execution failure is encountered iRFCM will terminate. In such case the user has to re-run iRFCM with delta options provided.
 
 `gamma` - 
 
