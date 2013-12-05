@@ -35,8 +35,14 @@ Examples
 -----------------------------------------
 
 ### Example 1. Iris Dataset
+    %load Iris dataset
     X = load('Data/iris.csv');
+    
+    %compute the Iris dissimilarity matrix using sup norm metric
     D = squareform(pdist(X,'chebychev'));
+    
+    %initialize delta, delta here being the Beta-Spread
+    n = size(D,1);
     delta = 1 - eye(n);
 
 ### Example 2. Mutation Dataset
