@@ -23,22 +23,30 @@ deltas = {  'delta = 1-eye(n);',...
 delta_names = {'beta-spread','power-fit','exp-fit','log-fit','subdominant-ultrametric'};
         
 %% iRFCM configurations/options (those are the default values)
-options.Fuzzifier        = 2;
-options.Epsilon          = 0.0001;
-options.MaxIter          = 100;
-options.InitType         = 2;
-options.AdditiveConstant = 0;
-options.Delta            = [];
+options.fuzzifier        = 2;
+options.epsilon          = 0.0001;
+options.maxIter          = 100;
+options.initType         = 2;
+options.gamma            = 0;
 
 %set the number of clusters to 4
 c = 4;
 
+%RFCM does not fail on the mutation dataset
+out = irfcm(D.^2,c,options);
+U = out.U;
+dlmwrite(sprintf('Results/Mutation/Partitions/U-RFCM(%d).csv',c),U, 'delimiter',',');
+
+uu = 1 - ((U'*U)./max(max(U'*U)));
+f = figure('Visible','off');imagesc(uu);colormap('gray');caxis([0 1]);
+print(f, '-djpeg', sprintf('Results/Mutation/Images/UU-RFCM(%d).jpg',c)); 
+    
 %% loop for every delta
 for i=1:length(deltas)
     eval(deltas{i});
     
     %set delta and run iRFCM
-    options.Delta = delta;
+    options.delta = delta;
     out = irfcm(D.^2,c,options);
 
     %save the partition matrix for this delta
@@ -50,4 +58,6 @@ for i=1:length(deltas)
     uu = 1 - ((U'*U)./max(max(U'*U)));
     f = figure('Visible','off');imagesc(uu);colormap('gray');caxis([0 1]);
     print(f, '-djpeg', sprintf('Results/Mutation/Images/UU-%s(%d).jpg',delta_names{i},c)); 
+    
+    out.euc.gamma
 end

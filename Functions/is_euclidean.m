@@ -1,4 +1,4 @@
-function [euc, min_eval, B, ev] = is_euclidean(D)
+function [euc, lambda, B, eigValMat] = is_euclidean(D)
 %%
 %
 %   Computes the eigenvalues of the matrix PAP, returns an indicator on
@@ -18,10 +18,10 @@ function [euc, min_eval, B, ev] = is_euclidean(D)
 %
 %   Usage [euc, c, B] = is_euclidean(D) 
 %
-% euc   - flag, 1 = D is Euclidean, 0 = D is NOT Euclidean
-% c     - smallest constant that makes D Euclidean
-% B     - the inner product table produced from centering the matrix D
-% ev    - the n x n diagonal eigenvalue matrix
+% euc       - flag, 1 = D is Euclidean, 0 = D is NOT Euclidean
+% lambda    - smallest constant that makes D Euclidean
+% B         - the inner product table produced from centering the matrix D
+% eigValMat - the n x n diagonal eigenvalue matrix
 %
 % Refs:
 %   [1] T. Cox and M. Cox, Multidimensional scaling. 2010.
@@ -39,14 +39,17 @@ function [euc, min_eval, B, ev] = is_euclidean(D)
     %the Beta-Spread approach
     A = -0.5 .* D;
     B = H*A*H;
+    
+    %use single precision, double precision did not give correct results as
+    %some eigenvalues and vectors became complex numbers
     B = single(B);
             
-    [~,ev] = eig(B);
-    min_eval = min(ev(:));
+    [~,eigValMat] = eig(B);
+    lambda = min(eigValMat(:));
 
     %sometimes the smallest eigenvalue is very small
     %something like -4e-16. Basically, -0
     %So I am thresholding the negative 0 and converting it to ZERO
-    min_eval(min_eval<0 & min_eval>-0.001) = 0;
-    euc = min_eval >= 0;
+    lambda(lambda<0 & lambda>-0.001) = 0;
+    euc = lambda >= 0;
 end

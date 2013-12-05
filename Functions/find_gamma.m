@@ -1,4 +1,4 @@
-function varargout = find_constant_c(D, delta)
+function varargout = find_gamma(D, delta)
 %%
 %   Computes the additive constant c if the provided matrix D is not
 %   Euclidean. The simplest approach is using Beta-Spread, where c is 
@@ -15,7 +15,7 @@ function varargout = find_constant_c(D, delta)
 %   If delta is provided a different computation is used to find c, which
 %   documented in ref. [3]
 %
-%   Usage c = find_constant_c(D, delta)
+%   Usage c = find_gamma(D, delta)
 %
 % varargout:
 % varargout{1} - 0 (D is not Euclidean) or 1 (D is Euclidean)
@@ -41,11 +41,11 @@ function varargout = find_constant_c(D, delta)
     %Get c based on the positive semi definite test without delta
     %See [1-2]. In other words, use Beta-Spread
     if nargin == 1
-        [euc, c, B, ev] = is_euclidean(D);
+        [euc, lambda, B, eigValMat] = is_euclidean(D);
         varargout{1} = euc;
-        varargout{2} = -2*c;
+        varargout{2} = -2*lambda;
         varargout{3} = B;
-        varargout{4} = ev;
+        varargout{4} = eigValMat;
         
     %Get c based on the positive semi definite test with a provided delta
     %See [3]
@@ -58,39 +58,39 @@ function varargout = find_constant_c(D, delta)
         %Wdelta is the doubly centered matrix such that 
         %Wdelta = (In - 11') * delta * (In - 11'), where In is the
         %identity matrix
-        [euc, ~, Wdelta] = is_euclidean(delta);
+        [euc, ~, wDelta] = is_euclidean(delta);
         
         if ~euc
             error('Delta is not Euclidean'); 
         end
             
         %compute the dounbly centered matrix corresponding to D^2
-        [~, ~, Wd] = is_euclidean(D); 
-
+        [~, ~, wD] = is_euclidean(D); 
+        
         %get the eignvalues and vectors of Wdelta
-        [vec val] = eig(Wdelta);
-        val = real(val);
+        [eigVecMat eigValMat] = eig(wDelta);
         
         %one of the eignvalues must be zero
-        idx = find(sum(val) > 1e-6);
+        idx = find(sum(eigValMat) > 1e-6);
 
         %now we end up of diagonal eignvalue of size (n-1) x (n-1)
-        val = val(idx,idx);
+        eigValMat = eigValMat(idx,idx);
 
         %and eignvectors matrix of size n X (n-1)
-        vec = vec(:,idx);
+        eigVecMat = eigVecMat(:,idx);
         
         %raise the eignevalues to the power -0.5
-        val(logical(eye(size(val)))) = diag(val).^-0.5;
+        eigValMat(logical(eye(size(eigValMat)))) = diag(eigValMat).^-0.5;
 
         %compute the additive constant c
-        B = (val*vec') * Wd * (vec*val);
-        evalues = eig(B);
-        evalues = real(evalues);
-        min_eval = min(evalues);
-        min_eval(min_eval<0 & min_eval>-0.000001) = 0;
+        B = (eigValMat*eigVecMat') * wD * (eigVecMat*eigValMat);
+        eigValArray = eig(B);
+        eigValArray = real(eigValArray);
+        
+        lambda = min(eigValArray);
+        lambda(lambda<0 & lambda>-0.000001) = 0;
 
-        varargout{1} = min_eval >= 0;
-        varargout{2} = -1 * min_eval;
+        varargout{1} = lambda >= 0;
+        varargout{2} = -1 * lambda;
     end
 end

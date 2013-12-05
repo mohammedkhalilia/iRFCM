@@ -23,11 +23,11 @@ deltas = {  'delta = 1 - eye(n);',...
 delta_names = {'beta-spread','power-fit','exp-fit','log-fit','subdominant-ultrametric'};
         
 %% iRFCM configurations/options (those are the default values)
-options.Fuzzifier        = 2;
-options.Epsilon          = 0.0001;
-options.MaxIter          = 100;
-options.InitType         = 2;
-options.AdditiveConstant = 0;
+options.fuzzifier        = 2;
+options.epsilon          = 0.0001;
+options.maxIter          = 100;
+options.initType         = 2;
+options.gamma            = 0;
 
 %set the number of clusters to 3
 c= 3;
@@ -45,7 +45,7 @@ for i=1:length(deltas)
     eval(deltas{i});
     
     %set delta and run iRFCM
-    options.Delta = delta;
+    options.delta = delta;
     out = irfcm(D.^2,c,options);
     
     %save the partition matrix for this delta

@@ -25,10 +25,10 @@ function varargout = stress(D, Dh, varargin)
 % [1] J. Benasseni, M. B. Dosse, and S. Joly, “On a General Transformation Making a Dissimilarity 
 %     Matrix Euclidean,” Journal of Classification, vol. 24, no. 1, pp. 33–51, Jun. 2007.
 
-    numarg = nargin - 2;
-    varargout = cell(1,numarg);
+    numArg = nargin - 2;
+    varargout = cell(1,numArg);
     
-    for i=1:numarg
+    for i=1:numArg
         
        switch varargin{i}
            

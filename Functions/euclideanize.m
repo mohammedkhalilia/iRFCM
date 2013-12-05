@@ -1,4 +1,4 @@
-function [Dh, c] = euclideanize(D, delta, c, transform_func)
+function [Dh, gamma] = euclideanize(D, delta, gamma, transformFunc)
 %%
 %
 %   Transforms a dissimilarity matrix D to an Euclidean matrix Dh. 
@@ -18,11 +18,11 @@ function [Dh, c] = euclideanize(D, delta, c, transform_func)
 % Usage [Dh,c] = make_euclidean(D, c, delta, transfrom_func)
 %
 % Dh                - the Euclidean realization of D
-% c                 - the constant used to tranform D to Dh
+% gamma             - the constant used to tranform D to Dh
 % D                 - dissimilarity matrix
 % c                 - Optional Additive Constant provided, if not provided
 %                       it will be computed
-% transform_func:   - this is a function that is used to tranform D to Dh. 
+% transformFunc     - this is a function that is used to tranform D to Dh. 
 %                     By default this function is:
 %
 %                       Dh = D + c*delta;
@@ -54,12 +54,12 @@ function [Dh, c] = euclideanize(D, delta, c, transform_func)
     
     %if c is not provided, then first check if the matrix is Euclidean 
     %and compute c
-    if nargin < 3 || c == 0 
+    if nargin < 3 || gamma == 0 
         %if delta is not provided, then use the default, Beta-Spread
         if nargin < 2 || isempty(delta)
-            [euc, c] = find_constant_c(D);
+            [euc, gamma] = find_gamma(D);
         else
-            [euc, c] = find_constant_c(D, delta);
+            [euc, gamma] = find_gamma(D, delta);
         end
         
         if euc
@@ -73,9 +73,9 @@ function [Dh, c] = euclideanize(D, delta, c, transform_func)
         delta = ones(n) - eye(n);
     end
     
-    if nargin == 4 && ~strcmp(transform_func,'')
-        eval(transform_func);
+    if nargin == 4 && ~strcmp(transformFunc,'')
+        eval(transformFunc);
     else
-        Dh = D + c.*delta;
+        Dh = D + gamma.*delta;
     end
 end

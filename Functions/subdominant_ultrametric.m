@@ -28,11 +28,11 @@ function sdu = subdominant_ultrametric(D,varargout)
         for j=i+1:n
             %for every two nodes get the path between them
             [~, path, ~] = graphshortestpath(MST,i,j);
-            path_len = length(path) - 1;
-            tmp = zeros(1,path_len);
+            pathLen = length(path) - 1;
+            tmp = zeros(1,pathLen);
             
             %use the path to find the length of the edges
-            for k=1:path_len
+            for k=1:pathLen
                 node = path(k:k+1);
                 tmp(k) = D(node(1),node(2));
             end
