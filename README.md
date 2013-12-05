@@ -29,7 +29,14 @@ Known Issues
 ------------------------------------------
 In some cases MATLAB produces complex eigenvalues and vectors in situation where it should not. That problem occurred when using double precision. Some matrices in iRFCM had to be converted to single precision to overcome this problem. Even with that sometimes the problem still occurs where the eigenvalues or vectors have zero imaginary part, in such case only the real part of the number is used.
 
-Despite those work arounds the iRFCM toolbox performs as expected and the results are verified with other published paper.
+Despite those work arounds, the iRFCM toolbox performs as expected and the results are verified with other published papers.
+
+Examples
+-----------------------------------------
+
+### Example 1. Iris Dataset
+
+### Example 2. Mutation Dataset
 
 References
 ------------------------------------------
