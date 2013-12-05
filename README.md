@@ -1,11 +1,11 @@
-Improved Relation Fuzzy c-Means
+Improved Relational Fuzzy _c_-Means
 ==========================================
 
 Overview
 ------------------------------------------
-iRFCM is an extension to the Relational Fuzzy c-Means algorithm first proposed by Hathaway and Bezdek (see [1]). RFCM expects the input D to be an Euclidean dissimilarity matrix. However, it is not always guaranteed that D is Euclidean, and if it is not Euclidean the duality relationalship between RFCM and FCM will be violated and cause RFCM to fail if the relational distances become negative. 
+iRFCM is an extension to the Relational Fuzzy _c_-Means algorithm first proposed by Hathaway and Bezdek (see [1]). RFCM expects the input D to be an Euclidean dissimilarity matrix. However, it is not always guaranteed that D is Euclidean, and if it is not Euclidean the duality relationalship between RFCM and FCM will be violated and cause RFCM to fail if the relational distances become negative. 
 
-To overcome this problem, iRFCM will Euclideanize D is it not already Euclidean using various types of transformations that are discussed in [2-3]
+To overcome this problem, iRFCM will Euclideanize _D_ is it not already Euclidean using various types of transformations that are discussed in [2-3]
 
 NOTE: part of iRFCM, which the Subdominant Ultrametric transformation, relies on two MATLAB built-in fucntions which are part of the Bioinformatics toolbox. The first function is graphminspantree() which is to construct the minimum spanning tree (MST) from D. The second function is graphshortestpath(), which is used to traverse the path between two nodes in MST. 
 
@@ -42,11 +42,11 @@ Example 4 breifly demonstrates how to define options for iRFCM. The iRFCM option
 
 `maxIter` - (default 100) maximim number of iterations the algorithm is allowed to run. If convergence is not reached, then the algorithm is forced to terminate which it reaches maxIter.
 
-`initType` - (default 2) iRFCM starts by initializing the relational cluster centers V. There are two ways that iRFCM can initialize V. If initType = 2 then c rows are randomly selected from D to initialize the c relational cluster centers. If initType = 1, then it is random initialization.
+`initType` - (default 2) iRFCM starts by initializing the relational cluster centers V. There are two ways that iRFCM can initialize V. If initType = 2 then _c_ rows are randomly selected from D to initialize the _c_ relational cluster centers. If initType = 1, then it is random initialization.
 
-`delta` - this is an n x n matrix that is used to Euclideanize D. If delta is not provided, iRFCM will attempt to perform clustering using D. If execution failure is encountered iRFCM will terminate. In such case the user has to re-run iRFCM with delta options provided.
+`delta` - this is an _n_ x _n_ matrix that is used to Euclideanize D. If delta is not provided, iRFCM will attempt to perform clustering using D. If execution failure is encountered iRFCM will terminate. In such case the user has to re-run iRFCM with delta options provided.
 
-`gamma` - this is the additive constant that gets added to the off-diagonal elements of D in order to make it Euclidean. User may not find this option useful because it requires knowing that constant in advance. Usually, this option should be left out and let iRFCM compute gamma based on the provided delta.
+`gamma` - this is the additive constant that gets added to the off-diagonal elements of _D_ in order to make it Euclidean. User may not find this option useful because it requires knowing that constant in advance. Usually, this option should be left out and let iRFCM compute gamma based on the provided delta.
 
 Examples (Mutation Dataset)
 -----------------------------------------
