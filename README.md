@@ -14,8 +14,8 @@ Directories Included in the Toolbox
 
 References
 ------------------------------------------
-[1]: R. J. Hathaway, J. W. Davenport, and J. C. Bezdek, “Relational duals of the c-means clustering algorithms,” Pattern Recognition, vol. 22, no. 2, pp. 205–212, Jan. 1989.
+1. R. J. Hathaway, J. W. Davenport, and J. C. Bezdek, “Relational duals of the c-means clustering algorithms,” Pattern Recognition, vol. 22, no. 2, pp. 205–212, Jan. 1989.
 
-[2]: J. Benasseni, M. B. Dosse, and S. Joly, “On a General Transformation Making a Dissimilarity Matrix Euclidean,” J. Classif., vol. 24, no. 1, pp. 33–51, Jun. 2007.
+2. J. Benasseni, M. B. Dosse, and S. Joly, “On a General Transformation Making a Dissimilarity Matrix Euclidean,” J. Classif., vol. 24, no. 1, pp. 33–51, Jun. 2007.
 
-[3]: J. Dattorro, Convex Optimization & Euclidean Distance Geometry. Meboo Publishing, 2005.
+3. J. Dattorro, Convex Optimization & Euclidean Distance Geometry. Meboo Publishing, 2005.
