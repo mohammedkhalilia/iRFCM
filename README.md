@@ -35,9 +35,9 @@ Examples
 -----------------------------------------
 
 ### Example 1. Iris Dataset
-`X = load('Data/iris.csv');`
-`D = squareform(pdist(X,'chebychev'));`
-`delta = 1 - eye(n);`
+    X = load('Data/iris.csv');
+    D = squareform(pdist(X,'chebychev'));
+    delta = 1 - eye(n);
 
 ### Example 2. Mutation Dataset
 
