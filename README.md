@@ -46,7 +46,7 @@ Example 4 breifly demonstrates how to define options for iRFCM. The iRFCM option
 
 `delta` - this is an n x n matrix that is used to Euclideanize D. If delta is not provided, iRFCM will attempt to perform clustering using D. If execution failure is encountered iRFCM will terminate. In such case the user has to re-run iRFCM with delta options provided.
 
-`gamma` - 
+`gamma` - this is the additive constant that gets added to the off-diagonal elements of D in order to make it Euclidean. User may not find this option useful because it requires knowing that constant in advance. Usually, this option should be left out and let iRFCM compute gamma based on the provided delta.
 
 Examples (Mutation Dataset)
 -----------------------------------------
