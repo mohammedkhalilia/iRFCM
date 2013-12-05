@@ -31,10 +31,11 @@ In some cases MATLAB produces complex eigenvalues and vectors in situation where
 
 Despite those work arounds, the iRFCM toolbox performs as expected and the results are verified with other published papers.
 
-Examples
+Example (Mutation Dataset)
 -----------------------------------------
 
-### Example 1. Iris Dataset
+### iRFCM with Beta-Spread
+
     %load Iris dataset
     X = load('Data/iris.csv');
     
@@ -52,8 +53,8 @@ Examples
 	
 	%notice that the first input is the Hadamard product of D. Because pdist dissimilarities are not squared.
 	out = irfcm(D.^2,c,options);
-	
-### Example 2. Mutation Dataset
+
+### iRFCM with Subdominant Ultrametric
 
 References
 ------------------------------------------
