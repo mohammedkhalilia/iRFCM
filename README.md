@@ -31,6 +31,9 @@ In some cases MATLAB produces complex eigenvalues and vectors in situation where
 
 Despite those work arounds, the iRFCM toolbox performs as expected and the results are verified with other published papers.
 
+iRFCM Configurations
+------------------------------------------
+
 Example (Mutation Dataset)
 -----------------------------------------
 
@@ -45,7 +48,9 @@ Example (Mutation Dataset)
     delta = 1 - eye(n);
     c = 4; %run with 4 clusters
 
-	%attach delta to a structure options that is inputted to iRFCM
+	%attach delta to a structure options that is inputted to iRFCM. If delta is provided as in this example
+	%then iRFCM will test if D is Euclidean if not it will use delta to Euclidean D. If D is found to be Euclidean
+	%then iRFCM will ignore delta and cluster D directly.
 	options.delta = delta;
 	
 	%notice that the first input is the Hadamard product of D. Because pdist dissimilarities are not squared.
@@ -78,7 +83,7 @@ The small code snippet below will run the Mutation dataset without the need for 
 	c = 4;
 	out = irfcm(D.^2,c);
 
-### iRFCM Configurations
+### iRFCM with User Defined Configurations
 iRFCM in the examples above runs with the default configurations. Those configurations can also be defined by the user
 
 	D = load('Data/animal_mutation.csv');
