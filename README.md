@@ -36,7 +36,7 @@ iRFCM Configurations
 iRFCM allows the user to define their own configurations using MATLAB struct. Those configurations are explained in the `Functions/irfcm.m` function, but we will explain here as well. 
 Example 4 breifly demonstrates how to define options for iRFCM. The iRFCM options are defined in a structure with the following fields/members:
 
-`fuzzifier` - 
+`fuzzifier` - controls the fuzzifiness of the partition. The default value is fuzzifier=2. To produce a hard partition set fuzzifier to smaller value like 1.1.
 
 `epsilon` -
 
