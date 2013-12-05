@@ -11,11 +11,11 @@ NOTE: part of iRFCM, which the Subdominant Ultrametric transformation, relies on
 
 Directories Included in the Toolbox
 ------------------------------------------
-`Data/` - test
+`Data/` - datasets used by the demo scripts
 
-`Functions/` - test
+`Functions/` - the MATLAB functions used in iRFCM
 
-`Results/` - test
+`Results/` - the location where iRFCM toolbox stores the results
 
 References
 ------------------------------------------
