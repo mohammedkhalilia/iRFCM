@@ -71,13 +71,29 @@ Example (Mutation Dataset)
 	out = irfcm(D.^2,c,options);
 
 ### iRFCM without Euclideanizing D
-The small code snippet below will run the Mutation dataset without the need Euclideanizing D first. That is OK because we already know in advance that RFCM does not fail to execute on the Mutation dataset.
+The small code snippet below will run the Mutation dataset without the need for Euclideanizing D first. That is OK because we already know in advance that RFCM does not fail to execute on the Mutation dataset.
 
 	D = load('Data/animal_mutation.csv');
 	n = size(D,1);
 	c = 4;
 	out = irfcm(D.^2,c);
 
+### iRFCM Configurations
+iRFCM in the examples above runs with the default configurations. Those configurations can also be defined by the user
+
+	D = load('Data/animal_mutation.csv');
+	n = size(D,1);
+	c = 4;
+	
+	%set iRFCM configurations
+	options.fuzzifier        = 2;   	%default
+	options.epsilon          = 0.0001; 	%tolerence for the termination criteria
+	options.maxIter          = 100;	 	%number of iterations before iRFCM terminates
+	options.initType         = 2;    	
+	options.gamma            = 0;
+
+	%run iRFCM with user defined values
+	out = irfcm(D.^2,c, options);
 
 References
 ------------------------------------------
