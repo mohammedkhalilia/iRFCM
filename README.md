@@ -3,7 +3,7 @@ Improved Relational Fuzzy _c_-Means
 
 Overview
 ------------------------------------------
-iRFCM is an extension to the Relational Fuzzy _c_-Means algorithm first proposed by Hathaway and Bezdek (see [1]). RFCM expects the input D to be an Euclidean dissimilarity matrix. However, it is not always guaranteed that D is Euclidean, and if it is not Euclidean the duality relationalship between RFCM and FCM will be violated and cause RFCM to fail if the relational distances become negative. 
+iRFCM is an extension to the Relational Fuzzy _c_-Means algorithm first proposed by Hathaway and Bezdek (see [1]). RFCM expects the input D to be an Euclidean dissimilarity matrix. However, it is not always guaranteed that _D_ is Euclidean, and if it is not Euclidean the duality relationalship between RFCM and FCM will be violated and cause RFCM to fail if the relational distances become negative. 
 
 To overcome this problem, iRFCM will Euclideanize _D_ is it not already Euclidean using various types of transformations that are discussed in [2-3]
 
@@ -90,7 +90,7 @@ Examples (Mutation Dataset)
 	out = irfcm(D.^2,c,options);
 
 ### Example 3. iRFCM without Euclideanizing D
-The small code snippet below will run the Mutation dataset without the need for Euclideanizing D first. That is OK because we already know in advance that RFCM does not fail to execute on the Mutation dataset.
+The small code snippet below will run the Mutation dataset without the need for Euclideanizing _D_ first. That is OK because we already know in advance that RFCM does not fail to execute on the Mutation dataset.
 
 	D = load('Data/animal_mutation.csv');
 	n = size(D,1);
