@@ -39,12 +39,20 @@ Examples
     X = load('Data/iris.csv');
     
     %compute the Iris dissimilarity matrix using sup norm metric
+    %be carefull here because pdist return the unsquared dissimialrities/distances
     D = squareform(pdist(X,'chebychev'));
     
     %initialize delta, delta here being the Beta-Spread
     n = size(D,1);
     delta = 1 - eye(n);
+    c = 3; %run with 3 clusters
 
+	%attach delta to a structure options that is inputted to iRFCM
+	options.delta = delta;
+	
+	%notice that the first input is the Hadamard product of D. Because pdist dissimilarities are not squared.
+	out = irfcm(D.^2,c,options);
+	
 ### Example 2. Mutation Dataset
 
 References
