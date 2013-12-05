@@ -33,6 +33,7 @@ Despite those work arounds, the iRFCM toolbox performs as expected and the resul
 
 iRFCM Configurations
 ------------------------------------------
+iRFCM allows the user to define their own configurations using MATLAB struct. Those configurations are explained in the `Functions/irfcm.m` function, but we will explain here as well.
 
 Example (Mutation Dataset)
 -----------------------------------------
