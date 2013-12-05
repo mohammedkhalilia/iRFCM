@@ -17,6 +17,12 @@ Directories Included in the Toolbox
 
 `Results/` - the location where iRFCM toolbox stores the results
 
+Setup
+------------------------------------------
+You can either download a zip file and extract it to your preferred location. Or clone this repository using git
+
+`git clone https://github.com/mohammedkhalilia/iRFCM.git`
+
 References
 ------------------------------------------
 1. R. J. Hathaway, J. W. Davenport, and J. C. Bezdek, “Relational duals of the c-means clustering algorithms,” Pattern Recognition, vol. 22, no. 2, pp. 205–212, Jan. 1989.
