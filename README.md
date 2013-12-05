@@ -62,3 +62,8 @@ References
 2. J. Benasseni, M. B. Dosse, and S. Joly, “On a General Transformation Making a Dissimilarity Matrix Euclidean,” J. Classif., vol. 24, no. 1, pp. 33–51, Jun. 2007.
 
 3. J. Dattorro, Convex Optimization & Euclidean Distance Geometry. Meboo Publishing, 2005.
+
+4. E. Anderson, “The Irises of the Gaspe Peninsula,” Bull. Am. Iris Soc., vol. 59, pp. 2 – 5, 1935.
+
+5. W. Fitch and E. Margoliash, “Construction of phylogenetic trees,” Science (80-. )., 1967.
+
