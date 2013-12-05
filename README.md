@@ -36,17 +36,17 @@ iRFCM Configurations
 iRFCM allows the user to define their own configurations using MATLAB struct. Those configurations are explained in the `Functions/irfcm.m` function, but we will explain here as well. 
 Example 4 breifly demonstrates how to define options for iRFCM. The iRFCM options are defined in a structure with the following fields/members:
 
-`fuzzifier` - controls the fuzzifiness of the partition. The default value is fuzzifier=2. To produce a hard partition set fuzzifier to smaller value like 1.1.
+`fuzzifier` - (default 2) controls the fuzzifiness of the partition. The default value is fuzzifier=2. To produce a hard partition set the fuzzifier to smaller value like 1.1.
 
-`epsilon` -
+`epsilon` - (default 0.0001) this is the tolernace for the convergence criteria. The default is epsilon=0.0001.
 
-`maxIter` - 
+`maxIter` - (default 100) maximim number of iterations the algorithm is allowed to run. If convergence is not reached, then the algorithm is forced to terminate which it reaches maxIter.
 
-`initType` - 
-
-`gamma` - 
+`initType` - (default 2) iRFCM starts by initializing the relational cluster centers V. There are two ways that iRFCM can initialize V. If initType = 2 then c rows are randomly selected from D to initialize the c relational cluster centers. If initType = 1, then it is random initialization.
 
 `delta` - 
+
+`gamma` - 
 
 Examples (Mutation Dataset)
 -----------------------------------------
