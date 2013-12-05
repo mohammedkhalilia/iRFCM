@@ -36,17 +36,14 @@ Example (Mutation Dataset)
 
 ### iRFCM with Beta-Spread
 
-    %load Iris dataset
-    X = load('Data/iris.csv');
-    
-    %compute the Iris dissimilarity matrix using sup norm metric
-    %be carefull here because pdist return the unsquared dissimialrities/distances
-    D = squareform(pdist(X,'chebychev'));
+    %load the mutation dataset (for details on the Mutation dataset see ref. [4])
+    %NOTE: the dissimilarities here are not squared
+    D = load('Data/animal_mutation.csv');
     
     %initialize delta, delta here being the Beta-Spread
     n = size(D,1);
     delta = 1 - eye(n);
-    c = 3; %run with 3 clusters
+    c = 4; %run with 4 clusters
 
 	%attach delta to a structure options that is inputted to iRFCM
 	options.delta = delta;
@@ -56,6 +53,32 @@ Example (Mutation Dataset)
 
 ### iRFCM with Subdominant Ultrametric
 
+	%load the mutation dataset (for details on the Mutation dataset see ref. [4])
+    %NOTE: the dissimilarities here are not squared
+    D = load('Data/animal_mutation.csv');
+    
+    %initialize delta, delta here being the Beta-Spread
+    n = size(D,1);
+    
+    %compute the subdominant ultrametric of D.^2 (NOT D), unless your dissimilarities are already squared. 
+    delta = subdominant_ultrametric(D.^2);
+    c = 4; %run with 4 clusters
+
+	%attach delta to a structure options that is inputted to iRFCM
+	options.delta = delta;
+	
+	%notice that the first input is the Hadamard product of D. Because pdist dissimilarities are not squared.
+	out = irfcm(D.^2,c,options);
+
+### iRFCM without Euclideanizing D
+The small code snippet below will run the Mutation dataset without the need Euclideanizing D first. That is OK because we already know in advance that RFCM does not fail to execute on the Mutation dataset.
+
+	D = load('Data/animal_mutation.csv');
+	n = size(D,1);
+	c = 4;
+	out = irfcm(D.^2,c);
+
+
 References
 ------------------------------------------
 1. R. J. Hathaway, J. W. Davenport, and J. C. Bezdek, “Relational duals of the c-means clustering algorithms,” Pattern Recognition, vol. 22, no. 2, pp. 205–212, Jan. 1989.
@@ -64,7 +87,7 @@ References
 
 3. J. Dattorro, Convex Optimization & Euclidean Distance Geometry. Meboo Publishing, 2005.
 
-4. E. Anderson, “The Irises of the Gaspe Peninsula,” Bull. Am. Iris Soc., vol. 59, pp. 2 – 5, 1935.
+4. W. Fitch and E. Margoliash, “Construction of phylogenetic trees,” Science (80-. )., 1967.
 
-5. W. Fitch and E. Margoliash, “Construction of phylogenetic trees,” Science (80-. )., 1967.
+5. E. Anderson, “The Irises of the Gaspe Peninsula,” Bull. Am. Iris Soc., vol. 59, pp. 2 – 5, 1935.
 
