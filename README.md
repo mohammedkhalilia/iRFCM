@@ -63,13 +63,13 @@ The output is also a structure with the following fields:
  `terminationIter` - the iteration number at which iRFCM convereged 
 
  `euc`   - the information used to Euclideanize _D_. euc is also a structure with the following fields:
-
+<p>
  `kruskalStress` - Kruskal stress that is used to measure the distortion between the original dissimilarities and the transformed ones.
 
  `gamma` - the additive constant constant that is used to Euclideanize the dissimilarity matrix.
 
  `D` - the Euclideanized dissimilarities based on which the clustering is performed.
-
+</p>
 Examples (Mutation Dataset)
 -----------------------------------------
 
