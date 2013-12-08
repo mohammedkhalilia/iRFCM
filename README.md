@@ -33,6 +33,9 @@ Despite those work arounds, the iRFCM toolbox performs as expected and the resul
 
 iRFCM Configurations
 ------------------------------------------
+
+### Input
+
 iRFCM allows the user to define their own configurations using MATLAB struct. Those configurations are explained in the `Functions/irfcm.m` function, but we will explain here as well. 
 Example 4 breifly demonstrates how to define options for iRFCM. The iRFCM options are defined in a structure with the following fields/members:
 
@@ -47,6 +50,25 @@ Example 4 breifly demonstrates how to define options for iRFCM. The iRFCM option
 `delta` - this is an _n_ x _n_ matrix that is used to Euclideanize _D_. If delta is not provided, iRFCM will attempt to perform clustering using _D_. If execution failure is encountered iRFCM will terminate. In such case the user has to re-run iRFCM with delta options provided.
 
 `gamma` - this is the additive constant that gets added to the off-diagonal elements of _D_ in order to make it Euclidean. User may not find this option useful because it requires knowing that constant in advance. Usually, this option should be left out and let iRFCM compute gamma based on the provided delta.
+
+### Output
+The output is also a structure with the following fields:
+
+ `options`    - this field contains the options structure to iRFCM described above
+
+ `V`         - _c_ x _d_ matrix containing relationa cluster centers _V_.
+
+ `U`         - _c_ x _n_ fuzzy partition matrix.
+
+ `terminationIter` - the iteration number at which iRFCM convereged 
+
+ `euc`   - the information used to Euclideanize _D_. euc is also a structure with the following fields:
+
+ `kruskalStress` - Kruskal stress that is used to measure the distortion between the original dissimilarities and the transformed ones.
+
+ `gamma` - the additive constant constant that is used to Euclideanize the dissimilarity matrix.
+
+ `D` - the Euclideanized dissimilarities based on which the clustering is performed.
 
 Examples (Mutation Dataset)
 -----------------------------------------

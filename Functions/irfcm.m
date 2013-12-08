@@ -100,7 +100,7 @@ function output = irfcm(R, c, options)
             [D, gamma] = euclideanize(R, delta, gamma);
             eps1 = stress(R, D, 'eps1');
             s1 = stress(R, D, 'stress1');
-            euc = struct('kruskalStress',s1,'eps',eps1,'gamma',gamma,'D',D,'delta',delta);
+            euc = struct('kruskalStress',s1,'eps',eps1,'gamma',gamma,'D',D);
         end
     end
     
@@ -145,8 +145,7 @@ function output = irfcm(R, c, options)
     %prepare output structure
     output = struct('U',U,...
                     'V',V,...
-                    'terminationIter',numIter,...
-                    'maxIter',maxIter);
+                    'terminationIter',numIter);
                 
     if exist('euc','var'),output.euc = euc;end
     if nargin == 3,output.options = options;end
