@@ -35,7 +35,7 @@ function varargout = stress(D, Dh, varargin)
             case 'nstress1' %normalized stress1, between 0 and 1
                 D = triu(D);
                 Dh = triu(Dh);
-                varargout{i} = sqrt(sum(sum((D-Dh).^2))/sum(sum(D.^2)));
+                varargout{i} = sqrt(sum(sum((D-Dh).^2))/sum(sum(D)));
             
             case 'stress1' %raw stress1, not normalized
                 D = triu(D);

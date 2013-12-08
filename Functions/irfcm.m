@@ -99,8 +99,8 @@ function output = irfcm(R, c, options)
         if ~euc
             [D, gamma] = euclideanize(R, delta, gamma);
             eps1 = stress(R, D, 'eps1');
-            s1 = stress(R, D, 'stress1');
-            euc = struct('kruskalStress',s1,'eps',eps1,'gamma',gamma,'D',D);
+            ks = stress(R, D.*eps1, 'stress1');
+            euc = struct('kruskalStress',ks,'gamma',gamma,'D',D);
         end
     end
     
