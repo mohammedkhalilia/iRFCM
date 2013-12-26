@@ -15,12 +15,12 @@ print(f, '-djpeg', 'Results/Iris/Images/Iris.jpg');
 % Your five choices of delta
 deltas = {  'delta = 1 - eye(n);',...
             'delta = (D.^(1/5)).^2;',...
-            'delta = (1-exp(-11.4.*D)).^2;',...
+            'delta = (1-exp(-11.5.*D)).^2;',...
             'delta = (log2(1+D.^(1/4))).^2;',...
             'delta = subdominant_ultrametric(D).^2;'};
 
 %labels assigned to every delta
-delta_names = {'beta-spread','power-fit','exp-fit','log-fit','subdominant-ultrametric'};
+deltaNames = {'beta-spread','power-fit','exp-fit','log-fit','subdominant-ultrametric'};
         
 %% iRFCM configurations/options (those are the default values)
 options.fuzzifier        = 2;
@@ -50,11 +50,11 @@ for i=1:length(deltas)
     
     %save the partition matrix for this delta
     U = out.U;
-    dlmwrite(sprintf('Results/Iris/Partitions/U_%s(%d).csv',delta_names{i},c),U, 'delimiter',',');
+    dlmwrite(sprintf('Results/Iris/Partitions/U_%s(%d).csv',deltaNames{i},c),U, 'delimiter',',');
 
     %save the induced dissimilarity image for this delta
     %Ref. J. Huband and J. Bezdek, “VCV2– Visual cluster validity,” Comput. Intell. Res. Front., 2008.
     uu = 1 - ((U'*U)./max(max(U'*U)));
     f = figure('Visible','off');imagesc(uu);colormap('gray');caxis([0 1]);
-    print(f, '-djpeg', sprintf('Results/Iris/Images/UU_%s(%d).jpg',delta_names{i},c));
+    print(f, '-djpeg', sprintf('Results/Iris/Images/UU_%s(%d).jpg',deltaNames{i},c));
 end
