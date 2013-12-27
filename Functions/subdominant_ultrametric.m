@@ -1,4 +1,4 @@
-function sdu = subdominant_ultrametric(D,varargout)
+function sdu = subdominant_ultrametric(D,varargin)
 %%
 %
 % Computes the Sub-dominant ultrametric matrix for a given dissimilarity
@@ -17,7 +17,7 @@ function sdu = subdominant_ultrametric(D,varargout)
     if nargin == 1
         MST = graphminspantree(sparse(D));
     else
-        MST = varargout{1};
+        MST = varargin{1};
     end
     
     MST = MST + MST';
@@ -25,7 +25,7 @@ function sdu = subdominant_ultrametric(D,varargout)
     sdu = zeros(n);
 
     for i=1:n
-        for j=i+1:n
+        for j=i+1:n            
             %for every two nodes get the path between them
             [~, path, ~] = graphshortestpath(MST,i,j);
             pathLen = length(path) - 1;
