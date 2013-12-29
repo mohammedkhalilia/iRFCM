@@ -20,7 +20,7 @@ deltas = {  'delta = 1 - eye(n);',...
 
 %labels assigned to every delta
 deltaNames = {'beta-spread','power-fit','exp-fit','log-fit','subdominant-ultrametric'};
-        
+                    
 %% iRFCM configurations/options (those are the default values)
 options.fuzzifier        = 2;
 options.epsilon          = 0.0001;
@@ -45,7 +45,7 @@ for i=1:length(deltas)
     
     %set delta and run iRFCM
     options.delta = delta;
-    out = irfcm(D.^2,c,options);
+    out = irfcm(D,c,options);
     
     %save the partition matrix for this delta
     U = out.U;
@@ -55,5 +55,5 @@ for i=1:length(deltas)
     %Ref. J. Huband and J. Bezdek, “VCV2– Visual cluster validity,” Comput. Intell. Res. Front., 2008.
     uu = 1 - ((U'*U)./max(max(U'*U)));
     f = figure('Visible','off');imagesc(uu);colormap('gray');caxis([0 1]);
-    print(f, '-djpeg', sprintf('Results/GDP194/Images/UU_%s(%d).jpg',deltaNames{i},c));
+    print(f, '-dtiff', '-r300', sprintf('Results/GDP194/Images/UU_%s(%d).tif',deltaNames{i},c));
 end
