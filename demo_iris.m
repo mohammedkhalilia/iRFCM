@@ -56,5 +56,5 @@ for i=1:length(deltas)
     %Ref. J. Huband and J. Bezdek, “VCV2– Visual cluster validity,” Comput. Intell. Res. Front., 2008.
     uu = 1 - ((U'*U)./max(max(U'*U)));
     f = figure('Visible','off');imagesc(uu);colormap('gray');caxis([0 1]);
-    print(f, '-dtiff', '-r300', sprintf('Results/Iris/Images/UU_%s(%d).tif',deltaNames{i},c));
+    print(f, '-djpeg', sprintf('Results/Iris/Images/UU_%s(%d).jpg',deltaNames{i},c));
 end
