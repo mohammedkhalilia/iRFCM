@@ -131,8 +131,19 @@ function output = irfcm(R, c, options)
         U = zeros(c,n);
         U(:,k) = (1./d(:,k))./(ones(c,1)*tmp);
         
-        %Second, for the points with d = 0, set U = 1
-        U(d == 0) = 1;
+        %Second, for the points with d = 0
+        %find the clusters and the points where d = 0
+        [clusters, points] = find(d == 0);
+        uniquePoints = unique(points)';
+        
+        for k = uniquePoints
+            %some k might have a zero distance to more than one cluster
+            idx = find(points == k);
+            sub = sub2ind([c n],clusters(idx),points(idx));
+            
+            %The membership is 1/number of clusters to which k has d = 0
+            U(sub) =  1/length(idx);
+        end
 		
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         % Update cluster prototypes V
