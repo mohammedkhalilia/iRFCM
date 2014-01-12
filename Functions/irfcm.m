@@ -84,13 +84,6 @@ function output = irfcm(R, c, options)
     D = R;n=size(D,1);d = zeros(c,n);
     numIter=0;stepSize=epsilon;U=Inf(c,n);
     
-    %some data checking and validation
-    if min(min(D)) < 0 || any(any(abs(D - D') > 0)) || max(diag(D)) > 0
-		error('R is not properly initialized.')
-	elseif size(D) ~= [n,n]
-		error('Dimensions R are inconsistent.')
-    end
-    
     %If delta is provided
     if isfield(options,'delta')
         euc = is_euclidean(R);
@@ -111,32 +104,45 @@ function output = irfcm(R, c, options)
     while  numIter < maxIter && stepSize >= epsilon
         U0 = U;
         
-        %Get new (quasi-squared-distance values) d:
-        % First, get new initial values for d:
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        % Compute the relational distances between "clusters" and points
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         for i=1:c
             d(i,:)=D*V(i,:)'-V(i,:)*D*V(i,:)'/2;
         end
        
-        %if D is not Euclideanized RFCM might fail
-        %check if any of the relational distances has negative distance
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        % Check for failure, are any of the d < 0?
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         j = find(d(:) < 0);
         if ~isempty(j)
            output.Error = sprintf('RFCM encountered %d negative relational distances in iteration %d. RFCM terminated execuation.\nPlease re-run iRFCM and provide Delta to Euclideanize D before clustering\n\n', length(j), numIter); 
            return;
         end
         
-        %Get new partition matrix U:
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        % Update the partition matrix U
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        %First, compute U for only those k points where d > 0
+        [~, k] = find(d > 0);
+        
         d=d.^(1/(m-1));
-		work = 1 ./ d;
-		work = sum(work);
-        U=1./d;
-        U = U./(ones(c,1)*work);
+        tmp = sum(1./d(:,k));
+        U = zeros(c,n);
+        U(:,k) = (1./d(:,k))./(ones(c,1)*tmp);
+        
+        %Second, for the points with d = 0, set U = 1
+        U(d == 0) = 1;
 		
-        %Get new V prototypes assuming we initialized V first
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        % Update cluster prototypes V
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         V=U.^m;  
         V = V./(sum(V,2) * ones(1,n));
     
-        %Calculate step_size and return to top of loop:
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        % Update the step size
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		stepSize=max(max(abs(U-U0)));
         
         numIter = numIter + 1;
