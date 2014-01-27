@@ -25,7 +25,7 @@ deltaNames = {'beta-spread','power-fit','exp-fit','log-fit','subdominant-ultrame
 options.fuzzifier        = 2;
 options.epsilon          = 0.0001;
 options.maxIter          = 100;
-options.initType         = 1;
+options.initType         = 2;
 options.gamma            = 0;
 
 %set the number of clusters to 3

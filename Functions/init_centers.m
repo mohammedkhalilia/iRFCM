@@ -20,7 +20,7 @@ function V = init_centers(type, n, c, D)
             V = V./(sum(V,2) * ones(1,n));
             
         case 2
-            idx = randperm(n,c);
+            idx = randperm(n,c)
             V = D(idx,:);
             V = V./(sum(V,2) * ones(1,n));
     end
