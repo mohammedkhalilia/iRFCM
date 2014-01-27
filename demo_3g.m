@@ -3,9 +3,9 @@ clear
 close all
 
 %generate 3 gaussian clouds
-a=normrnd(repmat([1,1],15000,1), 0.8);
-b=normrnd(repmat([1,5],15000,1), 0.8);
-c=normrnd(repmat([4,3],15000,1), 0.8);
+a=normrnd(repmat([1,1],10000,1), 1);
+b=normrnd(repmat([1,5],10000,1), 1);
+c=normrnd(repmat([4,3],10000,1), 1);
 data = [a;b;c];
 
 %compute the squared relational matrix

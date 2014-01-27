@@ -11,6 +11,9 @@ function V = init_centers(type, n, c, D)
 % c     - number of clusters
 % D     - nxn dissimilarity data, ONLY needed if you choose type = 2
 
+    %seed the random number generator
+    rng('shuffle')
+    
     switch type
         case 1
             V = rand(c,n);
