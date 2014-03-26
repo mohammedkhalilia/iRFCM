@@ -116,7 +116,7 @@ function output = irfcm(R, c, options)
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         j = find(d(:) < 0);
         if ~isempty(j)
-           output.Error = sprintf('RFCM encountered %d negative relational distances in iteration %d. RFCM terminated execuation.\nPlease re-run iRFCM and provide Delta to Euclideanize D before clustering\n\n', length(j), numIter); 
+           output.Error = sprintf('RFCM encountered %d negative relational distances in iteration %d. RFCM terminated execution.\nPlease re-run iRFCM and provide Delta to Euclideanize D before clustering\n\n', length(j), numIter); 
            return;
         end
         
