@@ -11,6 +11,13 @@ D01 = D./max(D(:));
 f = figure('Visible','off');imagesc(D.^2);colormap('gray');colorbar;
 print(f, '-djpeg', 'Results/GDP194/Images/GDP194.jpg');
 
+%set the number of clusters to 3
+c= 3;
+
+% Assumed ground truth
+labels = [ones(1,21) 2*ones(1,87) 3*ones(1,86)];
+GT = sparse(labels, 1:length(labels),1,c,length(labels));
+
 % Your five choices of delta
 deltas = {  'delta = 1 - eye(n);',...
             'delta = (D.^(1/8)).^2;',...
@@ -28,12 +35,9 @@ options.maxIter          = 100;
 options.initType         = 2;
 options.gamma            = 0;
 
-%set the number of clusters to 3
-c= 3;
-
 %Check if RFCM runs on Iris dataset dissimilarity image. You will see that
 %it will return error indicating failure. 
-out = irfcm(D.^2,c,options);
+out = irfcm(D.^2,c,options);    
 if isfield(out,'Error')
    fprintf('%s',out.Error); 
 end
@@ -56,4 +60,9 @@ for i=1:length(deltas)
     uu = 1 - ((U'*U)./max(max(U'*U)));
     f = figure('Visible','off');imagesc(uu);colormap('gray');caxis([0 1]);
     print(f, '-djpeg', sprintf('Results/GDP194/Images/UU_%s(%d).jpg',deltaNames{i},c));
+    
+    %compute the crisp rand index
+    [~,labels] = max(U);
+    U = sparse(labels, 1:length(labels),1,c,length(labels));
+    r = rand_index(U,GT,2)
 end

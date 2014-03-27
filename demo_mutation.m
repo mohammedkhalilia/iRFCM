@@ -18,7 +18,14 @@ deltas = {  'delta = 1-eye(n);',...
             'delta = (1-exp(-0.2.*D)).^2;',...
             'delta = (log2(1+D.^(1))).^2;',...
             'delta = subdominant_ultrametric(D).^2;'};
-        
+
+%set the number of clusters to 4
+c = 4;
+
+% Assumed ground truth
+labels = [ones(1,17) 2 3 4];
+GT = sparse(labels, 1:length(labels),1,c,length(labels));
+
 %labels assigned to every delta
 deltaNames = {'beta-spread','power-fit','exp-fit','log-fit','subdominant-ultrametric'};
         
@@ -29,9 +36,6 @@ options.maxIter          = 100;
 options.initType         = 2;
 options.gamma            = 0;
 
-%set the number of clusters to 4
-c = 4;
-
 %RFCM does not fail on the mutation dataset
 out = irfcm(D.^2,c,options);
 U = out.U;
@@ -40,7 +44,12 @@ dlmwrite(sprintf('Results/Mutation/Partitions/U-RFCM(%d).csv',c),U, 'delimiter',
 uu = 1 - ((U'*U)./max(max(U'*U)));
 f = figure('Visible','off');imagesc(uu);colormap('gray');caxis([0 1]);
 print(f, '-djpeg', sprintf('Results/Mutation/Images/UU-RFCM(%d).jpg',c)); 
-    
+
+%compute the crisp rand index
+[~,labels] = max(U);
+U = sparse(labels, 1:length(labels),1,c,length(labels));
+r = rand_index(U,GT,2)
+
 %% loop for every delta
 for i=1:length(deltas)
     eval(deltas{i});
@@ -58,4 +67,9 @@ for i=1:length(deltas)
     uu = 1 - ((U'*U)./max(max(U'*U)));
     f = figure('Visible','off');imagesc(uu);colormap('gray');caxis([0 1]);
     print(f, '-djpeg', sprintf('Results/Mutation/Images/UU-%s(%d).jpg',deltaNames{i},c));
+    
+    %compute the crisp rand index
+    [~,labels] = max(U);
+    U = sparse(labels, 1:length(labels),1,c,length(labels));
+    r = rand_index(U,GT,2)
 end
